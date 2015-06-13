@@ -9,15 +9,8 @@ class ArticleSpider(scrapy.Spider):
     allowed_domains = ["www.ptt.cc"]
     # before mongoDB is online, I use the same article to make the spider
     start_urls = (
-        'https://www.ptt.cc/bbs/Tech_Job/M.1432889825.A.843.html'
+        'https://www.ptt.cc/bbs/Tech_Job/M.1432889825.A.843.html',
     )
-
-    def start_requests(self):
-        # deal with the "Ask over 18 years old" page
-        return [
-            scrapy.FormRequest(
-                "https://www.ptt.cc/ask/over18?from=%2Fbbs%2FGossiping%2FM.1433213590.A.5F8.html",
-                formdata={'yes': 'yes'}, callback=self.parse)]
 
     def parse(self, response):
         item = PttTechJobItem()
