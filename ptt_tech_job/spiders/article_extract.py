@@ -37,14 +37,42 @@ class ArticleSpider(scrapy.Spider):
         item['push_comments'] = "".join(
             response.xpath("//div[@class='push']//text()").extract())
 
-        # count "push" tags in push comments
-        item['push_counter'] = item['push_comments'].encode(
-            'utf-8').count('\xe6\x8e\xa8')
-        # count "hiss" tags in push comments
-        item['hiss_counter'] = item['push_comments'].encode(
-            'utf-8').count('\xe5\x99\x93')
-        # count "->" tags in push comments
-        item['right_arrow_counter'] = item[
-            'push_comments'].encode('utf-8').count('\xe2\x86\x92')
+        # this is a list
+        comments = response.xpath("//div[@class='push']//text()").extract()
+
+        # index
+        i = 0
+        # tag counts
+        push_counter = 0
+        hiss_counter = 0
+        right_arrow_counter = 0
+
+        # create a while loop to count push / hiss / -> tags
+        while True:
+            try:
+                # there are 4 elements in one set of comments
+                # the 1st element is the target
+                # this is push tag counter
+                if comments[i][0] == u'\u63a8':
+                    push_counter += 1
+                # this is hiss tag counter
+                if comments[i][0] == u'\u5653':
+                    hiss_counter += 1
+                # this is -> tag counter
+                if comments[i][0] == u'\u2192':
+                    right_arrow_counter += 1
+                # there are 4 elements in one set of comments
+                # +4 to the next comment
+                i += 4
+            # when no element can be counted, exit while loop
+            except IndexError:
+                break
+
+        # save "push" tags to item
+        item['push_counter'] = push_counter
+        # save "hiss" tags to item
+        item['hiss_counter'] = hiss_counter
+        # save "->" tags to item
+        item['right_arrow_counter'] = right_arrow_counter
 
         yield item
