@@ -14,6 +14,8 @@ class ArticleSpider(scrapy.Spider):
 
     def parse(self, response):
         item = PttTechJobItem()
+        #
+        item['link'] = response.url
         # extract meta-data of post
         item['author'] = response.xpath(
             "//span[@class='article-meta-value']/text()").extract()[0].encode('utf-8')
@@ -33,8 +35,8 @@ class ArticleSpider(scrapy.Spider):
             "//span[@class='f2']/text()").extract()[0].encode('utf-8')
         item['author_ip'] = re.findall(r'[0-9]+(?:\.[0-9]+){3}', ip_line)
 
-        # extract push comments
-        item['push_comments'] = "".join(
+        # extract comments
+        item['comments'] = "".join(
             response.xpath("//div[@class='push']//text()").extract())
 
         # this is a list
@@ -72,7 +74,7 @@ class ArticleSpider(scrapy.Spider):
         item['push_counter'] = push_counter
         # save "hiss" tags to item
         item['hiss_counter'] = hiss_counter
-        # save "->" tags to item
-        item['right_arrow_counter'] = right_arrow_counter
+        # this is the total of push + hiss + -> tags
+        item['comments_counter'] = push_counter + hiss_counter + right_arrow_counter
 
         yield item
