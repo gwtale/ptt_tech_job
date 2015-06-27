@@ -12,7 +12,7 @@ Base = declarative_base()
 
 class Posts(Base):
     # create a table named posts
-    __tablename__ = 'ptt_tech_jobs'
+    __tablename__ = 'articles'
 
     # define Columns in the new table
     id = Column(Integer, primary_key=True, nullable=True, autoincrement=True)
@@ -52,7 +52,7 @@ class Posts(Base):
 if __name__ == '__main__':
     # use below command to install driver, do "not" install deb on MySQL site
     # pip install mysql-connector-python --allow-external mysql-connector-python
-    engine = create_engine('mysql+mysqlconnector://root:password@localhost:3306/testdb' \
+    engine = create_engine('mysql+mysqlconnector://root:password@localhost:3306/ptt_tech_job' \
                            , echo=True)
 
     # create new table if it doesn't exist

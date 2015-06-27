@@ -14,7 +14,7 @@ SPIDER_MODULES = ['ptt_tech_job.spiders']
 NEWSPIDER_MODULE = 'ptt_tech_job.spiders'
 
 # how deep spider will crawl
-DEPTH_LIMIT = 10
+DEPTH_LIMIT = 12
 
 # We don't want to be banned, so spider need to delay few seconds
 # 3 means 3 seconds
