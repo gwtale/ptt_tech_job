@@ -8,12 +8,12 @@ from sqlalchemy import String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-
 Base = declarative_base()
+
 
 class Posts(Base):
     # create a table named posts
-    __tablename__ = 'links'
+    __tablename__ = 'articles'
 
     # define Columns in the new table
     id = Column(Integer, primary_key=True, nullable=True, autoincrement=True)
@@ -46,20 +46,25 @@ if __name__ == '__main__':
 
     # add counters for loop
     i = 0
-    j = 0
-    while True:
-        try:
-            print data[i]
-            i += 1
-        except IndexError:
-            print "end of keys"
-            break
-    """
-    row = session.query(Posts).filter(Posts.link == data[i]["link"]).all()
-    if row:
-        print "this row of data exists"
-    else:
-        session.add(Posts(**data[i]))
-        session.commit()
-    """
+    # depth is set to 12 in settings.py
+    for i in range(0, 13):
+        # index counter
+        j = 0
+        # can not sure how many items, so keep loop running until IndexError occurs
+        while True:
+            try:
+                # combine domain to one complete web-link
+                dic = {"link": "https://www.ptt.cc" + data[i].values()[0][j]}
+                # check this web-link exists in database or not
+                row = session.query(Posts).filter(Posts.link == dic["link"]).all()
+                if row:
+                    print "this row of data exists"
+                else:
+                    # if not exists, then save
+                    session.add(Posts(**dic))
+                    session.commit()
+                j += 1
+            except IndexError:
+                print "end of values"
+                break
     print "\nAll SQL commands executed"

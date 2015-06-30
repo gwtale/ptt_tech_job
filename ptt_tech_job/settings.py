@@ -14,6 +14,7 @@ SPIDER_MODULES = ['ptt_tech_job.spiders']
 NEWSPIDER_MODULE = 'ptt_tech_job.spiders'
 
 # how deep spider will crawl
+# there are 12 new pages per week in general case
 DEPTH_LIMIT = 12
 
 # We don't want to be banned, so spider need to delay few seconds
@@ -21,4 +22,4 @@ DEPTH_LIMIT = 12
 DOWNLOAD_DELAY = 3
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'ptt_tech_job (+http://www.yourdomain.com)'
+# USER_AGENT = 'ptt_tech_job (+http://www.yourdomain.com)'

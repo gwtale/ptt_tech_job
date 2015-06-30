@@ -19,7 +19,7 @@ class Posts(Base):
     author = Column(String(150, collation='utf8_unicode_ci'))
     board = Column(String(150, collation='utf8_unicode_ci'))
     title = Column(String(150, collation='utf8_unicode_ci'))
-    link = Column(String(180, collation='utf8_bin'), unique=True)
+    # link = Column(String(180, collation='utf8_bin'), unique=True)
     content = Column(Text(collation='utf8_unicode_ci'))
     create_time = Column(DateTime)
     push_count = Column(Integer)
@@ -28,12 +28,12 @@ class Posts(Base):
     author_ip = Column(String(30, collation='utf8_unicode_ci'))
     location = Column(String(50, collation='utf8_bin'), nullable=True)
 
-    def __init__(self, author, board, title, link, content, create_time,\
+    def __init__(self, author, board, title, content, create_time,\
                  push_count, hiss_count, comment_count, author_ip, location):
         self.author = author
         self.board = board
         self.title = title
-        self.link = link
+        # self.link = link
         self.content = content
         self.create_time = create_time
         self.push_count = push_count
@@ -43,8 +43,8 @@ class Posts(Base):
         self.location = location
 
     def __repr__(self):
-        return "Posts('%s', %s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')" \
-               % (self.author, self.board, self.title, self.link, self.content,\
+        return "Posts('%s', %s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')" \
+               % (self.author, self.board, self.title, self.content,\
                   self.create_time, self.push_count, self.hiss_count, \
                   self.comment_count, self.author_ip, self.location)
 
