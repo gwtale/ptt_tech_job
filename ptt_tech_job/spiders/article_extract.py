@@ -8,9 +8,8 @@ from ptt_tech_job.items import PttTechJobItem
 class ArticleSpider(scrapy.Spider):
     name = "article_extract"
     allowed_domains = ["www.ptt.cc"]
-    def __init__(self, filename=None):
-        if filename:
-            mylist = open(filename).read().splitlines()
+    with open('article_links.csv') as f:
+        start_urls = [url.strip() for url in f.readlines()]
     # read web-links from json
     """
     start_urls = (
@@ -28,7 +27,7 @@ class ArticleSpider(scrapy.Spider):
             "//span[@class='article-meta-value']/text()").extract()[1].encode('utf-8')
         item['title'] = response.xpath(
             "//span[@class='article-meta-value']/text()").extract()[2].encode('utf-8')
-        item['time'] = response.xpath(
+        item['created_time'] = response.xpath(
             "//span[@class='article-meta-value']/text()").extract()[3].encode('utf-8')
 
         # extract content of article
@@ -39,10 +38,6 @@ class ArticleSpider(scrapy.Spider):
         ip_line = response.xpath(
             "//span[@class='f2']/text()").extract()[0].encode('utf-8')
         item['author_ip'] = re.findall(r'[0-9]+(?:\.[0-9]+){3}', ip_line)
-
-        # extract comments
-        item['comments'] = "".join(
-            response.xpath("//div[@class='push']//text()").extract())
 
         # this is a list
         comments = response.xpath("//div[@class='push']//text()").extract()

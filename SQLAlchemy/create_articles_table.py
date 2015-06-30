@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import json
+import time
+
 from sqlalchemy import create_engine
 from sqlalchemy import Column
 from sqlalchemy import Integer
@@ -15,21 +18,20 @@ class Posts(Base):
     __tablename__ = 'articles'
 
     # define Columns in the new table
-    id = Column(Integer, primary_key=True, nullable=True, autoincrement=True)
-    author = Column(String(150, collation='utf8_unicode_ci'))
-    board = Column(String(150, collation='utf8_unicode_ci'))
-    title = Column(String(150, collation='utf8_unicode_ci'))
-    link = Column(String(180, collation='utf8_bin'), unique=True)
-    content = Column(Text(collation='utf8_unicode_ci'))
-    create_time = Column(DateTime)
-    push_count = Column(Integer)
-    hiss_count = Column(Integer)
-    comment_count = Column(Integer)
-    author_ip = Column(String(30, collation='utf8_unicode_ci'))
-    location = Column(String(50, collation='utf8_bin'), nullable=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    author = Column(String(150, collation='utf8_unicode_ci'), nullable=True)
+    board = Column(String(150, collation='utf8_unicode_ci'), nullable=True)
+    title = Column(String(150, collation='utf8_unicode_ci'), nullable=True)
+    link = Column(String(180, collation='utf8_bin'), unique=True, nullable=True)
+    content = Column(Text(collation='utf8_unicode_ci'), nullable=True)
+    create_time = Column(DateTime, nullable=True)
+    push_count = Column(Integer, nullable=True)
+    hiss_count = Column(Integer, nullable=True)
+    comment_count = Column(Integer, nullable=True)
+    author_ip = Column(String(30, collation='utf8_unicode_ci'), nullable=True)
 
     def __init__(self, author, board, title, link, content, create_time,\
-                 push_count, hiss_count, comment_count, author_ip, location):
+                 push_count, hiss_count, comment_count, author_ip):
         self.author = author
         self.board = board
         self.title = title
@@ -40,14 +42,12 @@ class Posts(Base):
         self.hiss_count = hiss_count
         self.comment_count = comment_count
         self.author_ip = author_ip
-        self.location = location
 
     def __repr__(self):
-        return "Posts('%s', %s','%s','%s','%s','%s', '%s','%s','%s','%s','%s','%s','%s','%s')" \
+        return "Posts('%s', %s','%s','%s','%s','%s', '%s','%s','%s','%s','%s','%s','%s')" \
                % (self.author, self.board, self.title, self.title, \
                   self.content,self.create_time, self.push_count, \
-                  self.hiss_count, self.comment_count, self.author_ip, \
-                  self.location)
+                  self.hiss_count, self.comment_count, self.author_ip)
 
 
 if __name__ == '__main__':
@@ -64,15 +64,14 @@ if __name__ == '__main__':
     session = Session()
     session.autoflush = False
 
-    # create a for loop to create 100 sets of data
+    # read json file to list
+    with open('articles.json') as articles_file:
+        data = json.load(articles_file)
 
+    # add counters for loop
+    i = 0
+    while True:
+        print data
+        time.sleep(2)
 
-        row = session.query(Posts).filter(Posts.link == dic["link"]).all()
-        if row:
-            print "this row of data exists"
-            continue
-        else:
-            session.add(Posts(**dic))
-            session.commit()
-
-        print "\nAll SQL commands executed"
+    print "\nAll SQL commands executed"
