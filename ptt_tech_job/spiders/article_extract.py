@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
-
+import time
 import scrapy
 from ptt_tech_job.items import PttTechJobItem
 
@@ -10,8 +10,7 @@ class ArticleSpider(scrapy.Spider):
     allowed_domains = ["www.ptt.cc"]
     def __init__(self, filename=None):
         if filename:
-            with open(filename, 'r') as f:
-                self.start_urls = f.readlines()
+            mylist = open(filename).read().splitlines()
     # read web-links from json
     """
     start_urls = (
