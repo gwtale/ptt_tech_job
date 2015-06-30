@@ -1,17 +1,23 @@
 # -*- coding: utf-8 -*-
+import re
+
 import scrapy
 from ptt_tech_job.items import PttTechJobItem
-import re
 
 
 class ArticleSpider(scrapy.Spider):
     name = "article_extract"
     allowed_domains = ["www.ptt.cc"]
-    # before mongoDB is online, I use the same article to make the spider
+    def __init__(self, filename=None):
+        if filename:
+            with open(filename, 'r') as f:
+                self.start_urls = f.readlines()
+    # read web-links from json
+    """
     start_urls = (
         'https://www.ptt.cc/bbs/Tech_Job/M.1432889825.A.843.html',
     )
-
+    """
     def parse(self, response):
         item = PttTechJobItem()
         #

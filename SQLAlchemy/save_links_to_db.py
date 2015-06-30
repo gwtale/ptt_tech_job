@@ -13,7 +13,7 @@ Base = declarative_base()
 
 class Posts(Base):
     # create a table named posts
-    __tablename__ = 'articles'
+    __tablename__ = 'article_links'
 
     # define Columns in the new table
     id = Column(Integer, primary_key=True, nullable=True, autoincrement=True)
@@ -67,4 +67,5 @@ if __name__ == '__main__':
             except IndexError:
                 print "end of values"
                 break
+
     print "\nAll SQL commands executed"

@@ -18,8 +18,8 @@ NEWSPIDER_MODULE = 'ptt_tech_job.spiders'
 DEPTH_LIMIT = 12
 
 # We don't want to be banned, so spider need to delay few seconds
-# 3 means 3 seconds
-DOWNLOAD_DELAY = 3
+# 2 means 2 seconds
+DOWNLOAD_DELAY = 2
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'ptt_tech_job (+http://www.yourdomain.com)'
